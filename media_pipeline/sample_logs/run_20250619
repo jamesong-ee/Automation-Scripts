@@ -1,0 +1,12 @@
+=== Summary ===
+Renamed: 0
+Duplicates: 0
+Skipped: 0
+Corrupted: 0
+Audit: 0
+Total: 0
+Run started: 2025-06-20 01:38:28
+
+Renamed: photo_001.jpg -> 2008/07/photo_001.jpg
+Duplicate found: photo_002.jpg
+Audit flagged: photo_003.jpg has date 2022
