@@ -13,7 +13,7 @@ Solution: Python script that sorts by metadata timestamps, deduplicates with SHA
 
 Outcome: reduced multi-day manual review to <1 day of automated runtime.
 
-🔋 Battery Safe-Shutdown (coming soon)
+🔋 Battery Safe-Shutdown
 
 Problem: risk of data loss when running servers during blackouts.
 
