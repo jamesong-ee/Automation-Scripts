@@ -1,0 +1,73 @@
+﻿# Battery Shutdown Script – Dry Run Mode Enabled (May 21, 2025)
+
+
+## Script Path:
+/usr/local/bin/battery_shutdown.sh
+
+
+## Purpose:
+Automatically shut down the system when the battery level drops to or below 20% **and** the system is discharging (i.e., not plugged in).
+
+
+## Cron Job:
+Runs every 5 minutes from user's crontab:
+```
+*/5 * * * * /usr/local/bin/battery_shutdown.sh
+```
+
+
+## Script Enhancements (May 21):
+- Added `--dry-run` mode to safely test the logic without executing a shutdown
+- Dry-run prints battery charge and state, and indicates whether shutdown would occur
+
+
+## Current Script:
+```bash
+#!/bin/bash
+
+
+# Optional: enable dry-run mode with --dry-run
+DRY_RUN=false
+if [[ "$1" == "--dry-run" ]]; then
+        DRY_RUN=true
+fi
+
+
+BATTERY_INFO=$(upower -i /org/freedesktop/UPower/devices/battery_BAT0)
+CHARGE_LEVEL=$(echo "$BATTERY_INFO" | grep 'percentage' | awk '{print $2}' | sed 's/%//')
+STATE=$(echo "$BATTERY_INFO" | grep 'state' | awk '{print $2}')
+
+
+if [ "$STATE" = "discharging" ] && [ "$CHARGE_LEVEL" -le 20 ]; then
+        if $DRY_RUN; then
+            echo "[DRY-RUN] Battery at $CHARGE_LEVEL%. State: $STATE. Shutdown would occur."
+        else
+            logger "[AUTO-SHUTDOWN] Battery at $CHARGE_LEVEL%. State: $STATE. Initiating shutdown..."
+            sudo shutdown -h now
+        fi
+else
+        if $DRY_RUN; then
+            echo "[DRY-RUN] No action taken. Battery at $CHARGE_LEVEL%, State: $STATE"
+        fi
+fi
+```
+
+
+## Testing:
+```bash
+sudo /usr/local/bin/battery_shutdown.sh --dry-run
+```
+
+
+Output example:
+```
+[DRY-RUN] No action taken. Battery at 98%, State: fully-charged
+```
+
+
+## Next Steps:
+- Leave as-is and continue using via `cron`
+- Optionally migrate to systemd timer for advanced control/logging
+
+
+(Logged and verified under project files on node0.)
