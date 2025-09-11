@@ -4,6 +4,7 @@ A collection of lightweight automation and systems integration projects.
 Each script was built to solve a real problem and designed with reliability, reproducibility, and documentation in mind.
 
 Projects
+
 📂 Media Pipeline – Photo/Video Organizer
 
 Problem: thousands of mixed files, duplicates, and corrupt images.
