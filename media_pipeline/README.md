@@ -10,6 +10,11 @@ Thousands of mixed photos/videos in one folder. Manual sorting would take days.
 - Produces an audit log (moved, duplicates, errors, totals)
 - Dry-run mode to preview actions safely
 
+**Limitations**
+-Duplicate detection only within a single run (no persistent index)
+-Limited handling for non-EXIF media (videos may fall into audit)
+-No parallel processing for large datasets
+
 **Quick start**
 ```bash
 python -m venv .venv && source .venv/bin/activate
